@@ -12,7 +12,6 @@ import com.acostafa.kruger.inventariovacuna.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,7 +27,7 @@ public class UsuarioREST {
     private UsuarioService usuarioService;
 
 	@PostMapping
-	private ResponseEntity<Usuario> guardar (@Valid @RequestBody Usuario usuario){
+	private ResponseEntity<Usuario> guardar(@Valid @RequestBody Usuario usuario){
 		Usuario temporal = usuarioService.create(usuario);
 		
 		try {
@@ -40,20 +39,28 @@ public class UsuarioREST {
 	}
 	
 	
-	@GetMapping
+	@GetMapping(value = "/Listar/todos")
 	private ResponseEntity<List<Usuario>> listarTodasLosUsuarios (){
 		return ResponseEntity.ok(usuarioService.getAllUsuarios());
 	}
 	
-	@DeleteMapping
-	private ResponseEntity<Void> eliminarUsuario (@RequestBody Usuario usuario){
-		usuarioService.delete(usuario);
-		return ResponseEntity.ok().build();
+	@DeleteMapping(value = "/eliminar/{id}")
+	private ResponseEntity<Void> eliminarUsuario (@PathVariable Long id){
+        Optional<Usuario> usuario = usuarioService.findById(id);
+        if(usuario.isPresent()){
+            usuarioService.delete(usuario.get());
+		    return ResponseEntity.ok().build();
+        }
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
 	}
 	
-	@GetMapping (value = "{id}")
-	private ResponseEntity<Optional<Usuario>> listarUsuarioPorID (@PathVariable ("id") Long id){
-		return ResponseEntity.ok(usuarioService.findById(id));
+	@GetMapping (value = "/buscar/{id}")
+	private ResponseEntity<Usuario> buscarUsuarioPorID (@PathVariable Long id){
+        Optional<Usuario> usuario = usuarioService.findById(id);
+        if(usuario.isPresent()){
+            return ResponseEntity.ok(usuario.get());
+        }
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
 	}
 	
 }

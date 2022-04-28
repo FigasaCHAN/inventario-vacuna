@@ -56,10 +56,24 @@ public class Usuario {
     private String vacuna; //TODO relacionar con una tabla de Vacunacion
     // endregion
     // endregion
+    //region Constructores
     public Usuario(){
     }
     
     
+
+    public Usuario(
+            @NotBlank @Length(min = 10, max = 10) @Pattern(regexp = "[0-9]{10}", message = "Formato de Cedula Invalido") String cedula,
+            @NotBlank @Length(min = 3, max = 15) @Pattern(regexp = "[A-Z]{1}[a-z]{2,15}", message = "Nombre no valido") String nombre,
+            @NotBlank @Length(min = 3, max = 15) @Pattern(regexp = "[A-Z]{1}[a-z]{2,15}", message = "Apellido no valido") String apellido,
+            @NotBlank @Email(message = "No es un email valido") String email) {
+        this.cedula = cedula;
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.email = email;
+    }
+
+
 
     public Usuario(Long id,
             @NotBlank @Length(min = 10, max = 10) @Pattern(regexp = "[0-9]{10}", message = "Formato de Cedula Invalido") String cedula,
@@ -82,7 +96,7 @@ public class Usuario {
         this.estaVacunado = estaVacunado;
         this.vacuna = vacuna;
     }
-
+    // endregion
 
 
     // region Getters y Setters
