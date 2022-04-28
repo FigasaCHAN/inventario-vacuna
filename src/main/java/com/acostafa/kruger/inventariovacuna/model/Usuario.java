@@ -25,11 +25,16 @@ public class Usuario {
     private String vacuna; //TODO relacionar con una tabla de Vacunacion
     // endregion
     // endregion
+    public Usuario(){
+
+    }
     public Usuario(Long cedula, String nombre, String apellido, String email){
         this.id = cedula;
         this.nombre = nombre;
         this.apellido = apellido;
         this.email = email;
+        this.usuario = email; //el usuario va a ser el email
+        this.contraseña = cedula.toString(); //y la contraseña va a ser la cedula 
     }
     // region Getters y Setters
     public Long getId() {
