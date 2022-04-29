@@ -51,6 +51,7 @@ public class Vacuna {
         this.numeroDeDosis = numeroDeDosis;
     }
 
+
     //endregion
     // region Getters y Setters
     public String getId() {

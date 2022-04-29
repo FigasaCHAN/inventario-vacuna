@@ -53,7 +53,7 @@ public class Usuario {
 
     @JoinColumn(name = "id_vacuna", unique=true)
     @OneToOne(cascade = CascadeType.ALL)
-    private Vacuna vacuna; // TODO relacionar con una tabla de Vacunacion
+    private Vacuna vacuna;
     // endregion
     // endregion
     // region Constructores

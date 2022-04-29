@@ -34,12 +34,12 @@ public class UsuarioServiceImp implements IUsuarioService{
 
     @Override
     public List<Usuario> getVacunados(boolean vacunado) {
-        return null;
+        return vacunado?usuarioRepository.findByVacunaIsNotNull():usuarioRepository.findByVacunaIsNull();
     }
 
     @Override
     public List<Usuario> getVacunados(String vacuna) {
-        // TODO Auto-generated method stub
+        //TODO implementar Filtro por Tipo De Vacuna
         return null;
     }
 
@@ -56,7 +56,7 @@ public class UsuarioServiceImp implements IUsuarioService{
 
     @Override
     public List<Usuario> getVacunadosFechaEntre(String fechaInicio, String fechaFin) {
-        // TODO Auto-generated method stub
+        // TODO Implementar Filtro de Fecha
         return null;
     }
 
