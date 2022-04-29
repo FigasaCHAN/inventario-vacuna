@@ -34,7 +34,7 @@ public class UsuarioREST {
         Usuario temporal = usuarioService.create(usuario);
 
         try {
-            return ResponseEntity.created(new URI("/api/usuarios" + temporal.getId())).body(temporal);
+            return ResponseEntity.created(new URI("/api/usuarios" + temporal.getCedula())).body(temporal);
 
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
@@ -62,7 +62,7 @@ public class UsuarioREST {
     // endregion
     //region Eliminar
     @DeleteMapping(value = "/eliminar/{id}")
-    private ResponseEntity<Void> eliminarUsuario(@PathVariable Long id) {
+    private ResponseEntity<Void> eliminarUsuario(@PathVariable String id) {
         Optional<Usuario> usuario = usuarioService.findById(id);
         if (usuario.isPresent()) {
             usuarioService.delete(usuario.get());
@@ -74,7 +74,7 @@ public class UsuarioREST {
     // region Busqueda
     @GetMapping(value = "/buscar/{id}")
     @Procedure(value = MediaType.APPLICATION_JSON_VALUE)
-    private ResponseEntity<Usuario> buscarUsuarioPorID(@PathVariable Long id) {
+    private ResponseEntity<Usuario> buscarUsuarioPorID(@PathVariable String id) {
         Optional<Usuario> usuario = usuarioService.findById(id);
         if (usuario.isPresent()) {
             return ResponseEntity.ok(usuario.get());
