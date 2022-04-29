@@ -79,9 +79,7 @@ public class Usuario {
         this.vacuna = vacuna;
     }
     // endregion
-
-
-
+    //region Getters y Setters
     public String getCedula() {
         return cedula;
     }
@@ -151,7 +149,87 @@ public class Usuario {
     public void setDatosPersonales(DatosPersonales datosPersonales) {
         this.datosPersonales = datosPersonales;
     }
-    
+
     // endregion
 
+    @Override
+    public String toString() {
+        return "Usuario [administrador=" + administrador + ", apellido=" + apellido + ", cedula=" + cedula
+                + ", contraseña=" + contraseña + ", datosPersonales=" + datosPersonales + ", email=" + email
+                + ", nombre=" + nombre + ", usuario=" + usuario + ", vacuna=" + vacuna + "]";
+    }
+
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + (administrador ? 1231 : 1237);
+        result = prime * result + ((apellido == null) ? 0 : apellido.hashCode());
+        result = prime * result + ((cedula == null) ? 0 : cedula.hashCode());
+        result = prime * result + ((contraseña == null) ? 0 : contraseña.hashCode());
+        result = prime * result + ((datosPersonales == null) ? 0 : datosPersonales.hashCode());
+        result = prime * result + ((email == null) ? 0 : email.hashCode());
+        result = prime * result + ((nombre == null) ? 0 : nombre.hashCode());
+        result = prime * result + ((usuario == null) ? 0 : usuario.hashCode());
+        result = prime * result + ((vacuna == null) ? 0 : vacuna.hashCode());
+        return result;
+    }
+
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Usuario other = (Usuario) obj;
+        if (administrador != other.administrador)
+            return false;
+        if (apellido == null) {
+            if (other.apellido != null)
+                return false;
+        } else if (!apellido.equals(other.apellido))
+            return false;
+        if (cedula == null) {
+            if (other.cedula != null)
+                return false;
+        } else if (!cedula.equals(other.cedula))
+            return false;
+        if (contraseña == null) {
+            if (other.contraseña != null)
+                return false;
+        } else if (!contraseña.equals(other.contraseña))
+            return false;
+        if (datosPersonales == null) {
+            if (other.datosPersonales != null)
+                return false;
+        } else if (!datosPersonales.equals(other.datosPersonales))
+            return false;
+        if (email == null) {
+            if (other.email != null)
+                return false;
+        } else if (!email.equals(other.email))
+            return false;
+        if (nombre == null) {
+            if (other.nombre != null)
+                return false;
+        } else if (!nombre.equals(other.nombre))
+            return false;
+        if (usuario == null) {
+            if (other.usuario != null)
+                return false;
+        } else if (!usuario.equals(other.usuario))
+            return false;
+        if (vacuna == null) {
+            if (other.vacuna != null)
+                return false;
+        } else if (!vacuna.equals(other.vacuna))
+            return false;
+        return true;
+    }
+
+    
 }

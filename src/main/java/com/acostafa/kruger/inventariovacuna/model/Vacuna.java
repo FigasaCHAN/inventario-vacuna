@@ -79,4 +79,53 @@ public class Vacuna {
         this.numeroDeDosis = numeroDeDosis;
     }
     // endregion
+
+    @Override
+    public String toString() {
+        return "Vacuna [fechaDeAplicacion=" + fechaDeAplicacion + ", id=" + id + ", numeroDeDosis=" + numeroDeDosis
+                + ", tipo=" + tipo + "]";
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((fechaDeAplicacion == null) ? 0 : fechaDeAplicacion.hashCode());
+        result = prime * result + ((id == null) ? 0 : id.hashCode());
+        result = prime * result + numeroDeDosis;
+        result = prime * result + ((tipo == null) ? 0 : tipo.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Vacuna other = (Vacuna) obj;
+        if (fechaDeAplicacion == null) {
+            if (other.fechaDeAplicacion != null)
+                return false;
+        } else if (!fechaDeAplicacion.equals(other.fechaDeAplicacion))
+            return false;
+        if (id == null) {
+            if (other.id != null)
+                return false;
+        } else if (!id.equals(other.id))
+            return false;
+        if (numeroDeDosis != other.numeroDeDosis)
+            return false;
+        if (tipo == null) {
+            if (other.tipo != null)
+                return false;
+        } else if (!tipo.equals(other.tipo))
+            return false;
+        return true;
+    }
+    
+    
 }
+

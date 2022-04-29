@@ -1,8 +1,5 @@
 package com.acostafa.kruger.inventariovacuna.repository;
-
 import java.util.List;
-
-import com.acostafa.kruger.inventariovacuna.model.Usuario;
 import com.acostafa.kruger.inventariovacuna.model.Vacuna;
 
 import org.springframework.data.jpa.repository.JpaRepository;
