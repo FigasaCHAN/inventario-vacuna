@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.Length;
@@ -27,8 +28,13 @@ public class Vacuna {
     @Pattern(regexp = "(^Sputnik$)|(^AstraZeneca$)|(^Pfizer$)|(^Jhonson&Jhonson$)", message = "Tipo no valido")
     private String tipo;
 
-    private Date fechaDeAplicacion;
-    @Range(min = 0)
+    @NotBlank
+    @Length(max = 32)
+    @Pattern(regexp = "^([0-2][0-9]|3[0-1])(\\/|-)(0[1-9]|1[0-2])\\2(\\d{4})$", message = "Fecha no valida")
+    private String fechaDeAplicacion;
+
+    @NotNull
+    @Range(min = 1)
     private int numeroDeDosis;
     
     // region Constructores
@@ -37,8 +43,9 @@ public class Vacuna {
     }
     
     public Vacuna(@NotBlank @Length(min = 10, max = 10) String id,
-            @NotBlank @Pattern(regexp = "(^Sputnik$)|(^AstraZeneca$)|(^Pfizer$)|(^Jhonson&Jhonson$)", message = "Tipo no valido") String tipo,
-            Date fechaDeAplicacion, @Range(min = 0) int numeroDeDosis) {
+            @NotBlank @Length(max = 32) @Pattern(regexp = "(^Sputnik$)|(^AstraZeneca$)|(^Pfizer$)|(^Jhonson&Jhonson$)", message = "Tipo no valido") String tipo,
+            @NotBlank @Length(max = 32) @Pattern(regexp = "^([0-2][0-9]|3[0-1])(\\/|-)(0[1-9]|1[0-2])\\2(\\d{4})$", message = "Fecha no valida") String fechaDeAplicacion,
+            @NotNull @Range(min = 1) int numeroDeDosis) {
         this.id = id;
         this.tipo = tipo;
         this.fechaDeAplicacion = fechaDeAplicacion;
@@ -56,10 +63,10 @@ public class Vacuna {
     public void setTipo(String tipo) {
         this.tipo = tipo;
     }
-    public Date getFechaDeAplicacion() {
+    public String getFechaDeAplicacion() {
         return fechaDeAplicacion;
     }
-    public void setFechaDeAplicacion(Date fechaDeAplicacion) {
+    public void setFechaDeAplicacion(String fechaDeAplicacion) {
         this.fechaDeAplicacion = fechaDeAplicacion;
     }
     public int getNumeroDeDosis() {
