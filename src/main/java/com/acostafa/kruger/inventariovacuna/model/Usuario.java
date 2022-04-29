@@ -1,6 +1,5 @@
 package com.acostafa.kruger.inventariovacuna.model;
 
-import javax.annotation.Generated;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -8,7 +7,6 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.Length;
@@ -52,7 +50,7 @@ public class Usuario {
     private String fechaDeNacimiento;
     private String domicilio;
     private String telefonoMovil;
-    private boolean estaVacunado;
+    private boolean vacunado;
     private String vacuna; //TODO relacionar con una tabla de Vacunacion
     // endregion
     // endregion
@@ -93,7 +91,7 @@ public class Usuario {
         this.fechaDeNacimiento = fechaDeNacimiento;
         this.domicilio = domicilio;
         this.telefonoMovil = telefonoMovil;
-        this.estaVacunado = estaVacunado;
+        this.vacunado = estaVacunado;
         this.vacuna = vacuna;
     }
     // endregion
@@ -160,18 +158,21 @@ public class Usuario {
     public void setTelefonoMovil(String telefonoMovil) {
         this.telefonoMovil = telefonoMovil;
     }
-    public boolean isEstadoDeVacunacion() {
-        return estaVacunado;
-    }
-    public void setEstadoDeVacunacion(boolean estadoDeVacunacion) {
-        this.estaVacunado = estadoDeVacunacion;
-    }
     public String getVacuna() {
         return vacuna;
     }
     public void setVacuna(String vacuna) {
         this.vacuna = vacuna;
     }
+
+    public boolean isVacunado() {
+        return vacunado;
+    }
+
+    public void setVacunado(boolean estaVacunado) {
+        this.vacunado = estaVacunado;
+    }
+    
     // endregion
     
     

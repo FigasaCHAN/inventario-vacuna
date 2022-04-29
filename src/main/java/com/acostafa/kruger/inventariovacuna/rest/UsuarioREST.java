@@ -26,41 +26,50 @@ public class UsuarioREST {
     @Autowired
     private UsuarioService usuarioService;
 
-	@PostMapping
-	private ResponseEntity<Usuario> guardar(@Valid @RequestBody Usuario usuario){
-		Usuario temporal = usuarioService.create(usuario);
-		
-		try {
-			return ResponseEntity.created(new URI("/api/usuarios"+temporal.getId())).body(temporal);
-			
-		}catch (Exception e) {
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-		}
-	}
-	
-	
-	@GetMapping(value = "/Listar/todos")
-	private ResponseEntity<List<Usuario>> listarTodasLosUsuarios (){
-		return ResponseEntity.ok(usuarioService.getAllUsuarios());
-	}
-	
-	@DeleteMapping(value = "/eliminar/{id}")
-	private ResponseEntity<Void> eliminarUsuario (@PathVariable Long id){
+    @PostMapping
+    private ResponseEntity<Usuario> guardar(@Valid @RequestBody Usuario usuario) {
+        Usuario temporal = usuarioService.create(usuario);
+
+        try {
+            return ResponseEntity.created(new URI("/api/usuarios" + temporal.getId())).body(temporal);
+
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+    }
+
+    // @GetMapping(value = "/listar/todos")
+    @GetMapping
+    private ResponseEntity<List<Usuario>> listarTodasLosUsuarios() {
+        return ResponseEntity.ok(usuarioService.getAllUsuarios());
+    }
+
+    @GetMapping(value = "/listar/vacunados")
+    private ResponseEntity<List<Usuario>> listarVacunados() {
+        return ResponseEntity.ok(usuarioService.getVacunados(true));
+    }
+    @GetMapping(value = "/listar/no-vacunados")
+    private ResponseEntity<List<Usuario>> listarNoVacunados() {
+        return ResponseEntity.ok(usuarioService.getVacunados(false));
+    }
+
+    @DeleteMapping(value = "/eliminar/{id}")
+    private ResponseEntity<Void> eliminarUsuario(@PathVariable Long id) {
         Optional<Usuario> usuario = usuarioService.findById(id);
-        if(usuario.isPresent()){
+        if (usuario.isPresent()) {
             usuarioService.delete(usuario.get());
-		    return ResponseEntity.ok().build();
+            return ResponseEntity.ok().build();
         }
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-	}
-	
-	@GetMapping (value = "/buscar/{id}")
-	private ResponseEntity<Usuario> buscarUsuarioPorID (@PathVariable Long id){
+    }
+
+    @GetMapping(value = "/buscar/{id}")
+    private ResponseEntity<Usuario> buscarUsuarioPorID(@PathVariable Long id) {
         Optional<Usuario> usuario = usuarioService.findById(id);
-        if(usuario.isPresent()){
+        if (usuario.isPresent()) {
             return ResponseEntity.ok(usuario.get());
         }
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-	}
-	
+    }
+
 }
