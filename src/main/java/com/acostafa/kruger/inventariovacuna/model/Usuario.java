@@ -2,9 +2,8 @@ package com.acostafa.kruger.inventariovacuna.model;
 
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
@@ -18,6 +17,7 @@ import org.hibernate.validator.constraints.Length;
 public class Usuario {
     // region Viables de Instancia
     @Id
+    @Column(name = "id_usuario")
     @NotBlank
     @Length(min = 10, max = 10)
     @Pattern(regexp = "[0-9]{10}", message = "Formato de Cedula Invalido")
