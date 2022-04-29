@@ -1,14 +1,22 @@
 package com.acostafa.kruger.inventariovacuna.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
+
+import org.hibernate.validator.constraints.Length;
 
 @Entity
 @Table(name = "DatosPersonales")
 public class DatosPersonales {
+
     @Id
-    private String id;
+    @Column(name = "id_datosPersonales")
+    @NotBlank
+    @Length(min = 10, max = 10)
+    private String id; //este id estara relacionado al id del usuario
 
     private String fechaDeNacimiento;
 
@@ -18,19 +26,24 @@ public class DatosPersonales {
 
     private boolean vacunado;
 
+    // region Constructores
     public DatosPersonales(){
 
     }
 
-    public DatosPersonales(String id, String fechaDeNacimiento, String domicilio, String telefonoMovil,
-            boolean vacunado) {
+   
+
+    public DatosPersonales(@NotBlank @Length(min = 10, max = 10) String id, String fechaDeNacimiento, String domicilio,
+            String telefonoMovil, boolean vacunado) {
         this.id = id;
         this.fechaDeNacimiento = fechaDeNacimiento;
         this.domicilio = domicilio;
         this.telefonoMovil = telefonoMovil;
         this.vacunado = vacunado;
     }
+    // endregion
 
+    // region Getters y Setters
     public String getId() {
         return id;
     }
@@ -70,6 +83,6 @@ public class DatosPersonales {
     public void setVacunado(boolean vacunado) {
         this.vacunado = vacunado;
     }
-    
+    //endregion
     
 }
