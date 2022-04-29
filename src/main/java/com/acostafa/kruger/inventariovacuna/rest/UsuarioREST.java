@@ -2,12 +2,11 @@ package com.acostafa.kruger.inventariovacuna.rest;
 
 import java.net.URI;
 import java.util.List;
-import java.util.Optional;
 
 import javax.validation.Valid;
 
 import com.acostafa.kruger.inventariovacuna.model.Usuario;
-import com.acostafa.kruger.inventariovacuna.service.UsuarioService;
+import com.acostafa.kruger.inventariovacuna.service.implementaciones.UsuarioServiceImp;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.query.Procedure;
@@ -26,7 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/usuarios")
 public class UsuarioREST {
     @Autowired
-    private UsuarioService usuarioService;
+    private UsuarioServiceImp usuarioService;
 
     //region Guardar
     @PostMapping
@@ -57,17 +56,15 @@ public class UsuarioREST {
     @GetMapping(value = "/listar/vacunados-con/{vacuna}")
     @Procedure(value = MediaType.APPLICATION_JSON_VALUE)
     private ResponseEntity<List<Usuario>> listarVacunados(@PathVariable String vacuna) {
-        //TODO corregir
-        //return ResponseEntity.ok(usuarioService.getVacunados(vacuna));
-        return null;
+        return ResponseEntity.ok(usuarioService.getVacunados(vacuna));
     }
     // endregion
     //region Eliminar
     @DeleteMapping(value = "/eliminar/{id}")
     private ResponseEntity<Void> eliminarUsuario(@PathVariable String id) {
-        Optional<Usuario> usuario = usuarioService.findById(id);
-        if (usuario.isPresent()) {
-            usuarioService.delete(usuario.get());
+        Usuario usuarioAEliminar = usuarioService.findById(id);
+        if(usuarioAEliminar!=null){
+            usuarioService.delete(usuarioAEliminar);
             return ResponseEntity.ok().build();
         }
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
@@ -77,9 +74,9 @@ public class UsuarioREST {
     @GetMapping(value = "/buscar/{id}")
     @Procedure(value = MediaType.APPLICATION_JSON_VALUE)
     private ResponseEntity<Usuario> buscarUsuarioPorID(@PathVariable String id) {
-        Optional<Usuario> usuario = usuarioService.findById(id);
-        if (usuario.isPresent()) {
-            return ResponseEntity.ok(usuario.get());
+        Usuario usuario = usuarioService.findById(id);
+        if (usuario!=null) {
+            return ResponseEntity.ok(usuario);
         }
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
     }
