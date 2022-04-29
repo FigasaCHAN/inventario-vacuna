@@ -10,7 +10,9 @@ import com.acostafa.kruger.inventariovacuna.model.Usuario;
 import com.acostafa.kruger.inventariovacuna.service.UsuarioService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.query.Procedure;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,6 +28,7 @@ public class UsuarioREST {
     @Autowired
     private UsuarioService usuarioService;
 
+    //region Guardar
     @PostMapping
     private ResponseEntity<Usuario> guardar(@Valid @RequestBody Usuario usuario) {
         Usuario temporal = usuarioService.create(usuario);
@@ -37,22 +40,27 @@ public class UsuarioREST {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
     }
-
-    // @GetMapping(value = "/listar/todos")
+    //endregion
+    //region Listar usuarios
     @GetMapping
+    @Procedure(value = MediaType.APPLICATION_JSON_VALUE)
     private ResponseEntity<List<Usuario>> listarTodasLosUsuarios() {
         return ResponseEntity.ok(usuarioService.getAllUsuarios());
     }
 
     @GetMapping(value = "/listar/vacunados/{vacunado}")
+    @Procedure(value = MediaType.APPLICATION_JSON_VALUE)
     private ResponseEntity<List<Usuario>> listarVacunados(@PathVariable boolean vacunado) {
         return ResponseEntity.ok(usuarioService.getVacunados(vacunado));
     }
 
     @GetMapping(value = "/listar/vacunados-con/{vacuna}")
+    @Procedure(value = MediaType.APPLICATION_JSON_VALUE)
     private ResponseEntity<List<Usuario>> listarVacunados(@PathVariable String vacuna) {
         return ResponseEntity.ok(usuarioService.getVacunados(vacuna));
     }
+    // endregion
+    //region Eliminar
     @DeleteMapping(value = "/eliminar/{id}")
     private ResponseEntity<Void> eliminarUsuario(@PathVariable Long id) {
         Optional<Usuario> usuario = usuarioService.findById(id);
@@ -62,8 +70,10 @@ public class UsuarioREST {
         }
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
     }
-
+    //endregion
+    // region Busqueda
     @GetMapping(value = "/buscar/{id}")
+    @Procedure(value = MediaType.APPLICATION_JSON_VALUE)
     private ResponseEntity<Usuario> buscarUsuarioPorID(@PathVariable Long id) {
         Optional<Usuario> usuario = usuarioService.findById(id);
         if (usuario.isPresent()) {
@@ -71,5 +81,5 @@ public class UsuarioREST {
         }
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
     }
-
+    // endregion
 }

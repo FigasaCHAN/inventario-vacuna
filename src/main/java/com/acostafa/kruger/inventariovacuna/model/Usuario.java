@@ -1,5 +1,7 @@
 package com.acostafa.kruger.inventariovacuna.model;
 
+import java.util.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -47,7 +49,7 @@ public class Usuario {
 
     private boolean administrador; //TODO implementar entidad Rol
     // region Datos Personales
-    private String fechaDeNacimiento;
+    private Date fechaDeNacimiento;
     private String domicilio;
     private String telefonoMovil;
     private boolean vacunado;
@@ -73,13 +75,17 @@ public class Usuario {
 
 
 
+    
+    // endregion
+
+
     public Usuario(Long id,
             @NotBlank @Length(min = 10, max = 10) @Pattern(regexp = "[0-9]{10}", message = "Formato de Cedula Invalido") String cedula,
             @NotBlank @Length(min = 3, max = 15) @Pattern(regexp = "[A-Z]{1}[a-z]{2,15}", message = "Nombre no valido") String nombre,
             @NotBlank @Length(min = 3, max = 15) @Pattern(regexp = "[A-Z]{1}[a-z]{2,15}", message = "Apellido no valido") String apellido,
             @NotBlank @Email(message = "No es un email valido") String email, @NotBlank String usuario,
-            @NotBlank String contraseña, boolean administrador, String fechaDeNacimiento, String domicilio,
-            String telefonoMovil, boolean estaVacunado, String vacuna) {
+            @NotBlank String contraseña, boolean administrador, Date fechaDeNacimiento, String domicilio,
+            String telefonoMovil, boolean vacunado, String vacuna) {
         this.id = id;
         this.cedula = cedula;
         this.nombre = nombre;
@@ -91,10 +97,10 @@ public class Usuario {
         this.fechaDeNacimiento = fechaDeNacimiento;
         this.domicilio = domicilio;
         this.telefonoMovil = telefonoMovil;
-        this.vacunado = estaVacunado;
+        this.vacunado = vacunado;
         this.vacuna = vacuna;
     }
-    // endregion
+
 
 
     // region Getters y Setters
@@ -140,12 +146,15 @@ public class Usuario {
     public void setAdministrador(boolean administrador) {
         this.administrador = administrador;
     }
-    public String getFechaDeNacimiento() {
+
+    public Date getFechaDeNacimiento() {
         return fechaDeNacimiento;
     }
-    public void setFechaDeNacimiento(String fechaDeNacimiento) {
+
+    public void setFechaDeNacimiento(Date fechaDeNacimiento) {
         this.fechaDeNacimiento = fechaDeNacimiento;
     }
+
     public String getDomicilio() {
         return domicilio;
     }
