@@ -7,7 +7,7 @@ Fue mi primer APIRest utilizando Java y Spring Boot, desde el primer commit hast
 
 Primero realicé un análisis de las distintas clases que pertenecen al modelo, abstrayéndome del cómo implementarlo.
 
-# Análisis de clases, con su invariante de representación:
+### Análisis de clases, con su invariante de representación:
 ```java
 public class Usuario { 
 //Pensé que lo mejor era representar a un usuario como un solo objeto, ya que en algún futuro un Empleado se vuelva Administrador y no perder sus datos.
@@ -54,3 +54,15 @@ public class RolEmpleado extends Rol{
    public void modificarEstadoDeVacunacion(boolean nuevoEstado);
 } 
 ```  
+### Implementacion:
+Durante el proceso de implementación tuve distintas estrategia, y admito que todavía le queda pulir al proyecto, sobre todo la SEGURIDAD. 
+En un principio creé el proyecto con solo tres capas (paquetes), las cuales son:
+* Model: La cual se encarga de contener el modelo
+* Repository: El repositorio es nuestro acceso a los datos externos (como una Base de Datos)
+* Service: El servico es quien se encarga de la lógica 
+Luego de esto, necesitaba una más para alojar a quienes se encargarían de las peticiones, el paquete Rest.
+
+Por otro lado, después de leer varios post y ver distintos videos con respeto al tema de buenas practica, implementé la practica de dividir el paquete Service en Interfaces e Implementaciones. Por qué? para abstraerme de la implementación del servicio... Esto hace un código más sustentable, ya que la interfaz es lo que define al servico, en otra palabras es lo que sabe realizar el servicio. Con esta interfaz, si se agrega alguna funcionabilidad nueva, obligaría a las implementaciones a realizarlas.
+En un proyecto podemos tener varias implementaciones de un mismo servicio, podríamos realizar varias implementaciones con distintos repositorios. 
+
+Un punto que me hubiese gustado agregar, y es donde falla mi actual diseño, es utilizar un objeto DAO para proteger ciertos datos como la contraseña del usuario, por ejemplo. Con esto, los Rest solo expondrán los datos que YO quiera. Actualmente la contraseña del usuario está expuesta.
