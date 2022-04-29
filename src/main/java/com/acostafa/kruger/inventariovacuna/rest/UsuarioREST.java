@@ -44,15 +44,12 @@ public class UsuarioREST {
         return ResponseEntity.ok(usuarioService.getAllUsuarios());
     }
 
-    @GetMapping(value = "/listar/vacunados")
-    private ResponseEntity<List<Usuario>> listarVacunados() {
-        return ResponseEntity.ok(usuarioService.getVacunados(true));
+    @GetMapping(value = "/listar/vacunados/{vacunado}")
+    private ResponseEntity<List<Usuario>> listarVacunados(@PathVariable boolean vacunado) {
+        return ResponseEntity.ok(usuarioService.getVacunados(vacunado));
     }
-    @GetMapping(value = "/listar/no-vacunados")
-    private ResponseEntity<List<Usuario>> listarNoVacunados() {
-        return ResponseEntity.ok(usuarioService.getVacunados(false));
-    }
-    @GetMapping(value = "/listar/vacunados/{vacuna}")
+
+    @GetMapping(value = "/listar/vacunados-con/{vacuna}")
     private ResponseEntity<List<Usuario>> listarVacunados(@PathVariable String vacuna) {
         return ResponseEntity.ok(usuarioService.getVacunados(vacuna));
     }
