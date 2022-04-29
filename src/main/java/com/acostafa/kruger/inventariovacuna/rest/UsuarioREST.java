@@ -52,7 +52,10 @@ public class UsuarioREST {
     private ResponseEntity<List<Usuario>> listarNoVacunados() {
         return ResponseEntity.ok(usuarioService.getVacunados(false));
     }
-
+    @GetMapping(value = "/listar/vacunados/{vacuna}")
+    private ResponseEntity<List<Usuario>> listarVacunados(@PathVariable String vacuna) {
+        return ResponseEntity.ok(usuarioService.getVacunados(vacuna));
+    }
     @DeleteMapping(value = "/eliminar/{id}")
     private ResponseEntity<Void> eliminarUsuario(@PathVariable Long id) {
         Optional<Usuario> usuario = usuarioService.findById(id);
