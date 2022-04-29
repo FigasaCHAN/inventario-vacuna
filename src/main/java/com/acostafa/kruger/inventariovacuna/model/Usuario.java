@@ -48,10 +48,9 @@ public class Usuario {
 
     private boolean administrador; // TODO implementar entidad Rol
     // region Datos Personales
-    private Date fechaDeNacimiento;
-    private String domicilio;
-    private String telefonoMovil;
-    private boolean vacunado;
+    @JoinColumn(name = "id_datosPersonales", unique=true)
+    @OneToOne(cascade = CascadeType.ALL)
+    private DatosPersonales datosPersonales;
 
     @JoinColumn(name = "id_vacuna", unique=true)
     @OneToOne(cascade = CascadeType.ALL)
@@ -63,20 +62,26 @@ public class Usuario {
     public Usuario() {
     }
 
+    
     public Usuario(
             @NotBlank @Length(min = 10, max = 10) @Pattern(regexp = "[0-9]{10}", message = "Formato de Cedula Invalido") String cedula,
             @NotBlank @Length(min = 3, max = 15) @Pattern(regexp = "[A-Z]{1}[a-z]{2,15}", message = "Nombre no valido") String nombre,
             @NotBlank @Length(min = 3, max = 15) @Pattern(regexp = "[A-Z]{1}[a-z]{2,15}", message = "Apellido no valido") String apellido,
             @NotBlank @Email(message = "No es un email valido") String email, @NotBlank String usuario,
-            @NotBlank String contraseña) {
+            @NotBlank String contraseña, boolean administrador, DatosPersonales datosPersonales, Vacuna vacuna) {
         this.cedula = cedula;
         this.nombre = nombre;
         this.apellido = apellido;
         this.email = email;
         this.usuario = usuario;
         this.contraseña = contraseña;
+        this.administrador = administrador;
+        this.datosPersonales = datosPersonales;
+        this.vacuna = vacuna;
     }
     // endregion
+
+
 
     public String getCedula() {
         return cedula;
@@ -130,30 +135,6 @@ public class Usuario {
         this.administrador = administrador;
     }
 
-    public Date getFechaDeNacimiento() {
-        return fechaDeNacimiento;
-    }
-
-    public void setFechaDeNacimiento(Date fechaDeNacimiento) {
-        this.fechaDeNacimiento = fechaDeNacimiento;
-    }
-
-    public String getDomicilio() {
-        return domicilio;
-    }
-
-    public void setDomicilio(String domicilio) {
-        this.domicilio = domicilio;
-    }
-
-    public String getTelefonoMovil() {
-        return telefonoMovil;
-    }
-
-    public void setTelefonoMovil(String telefonoMovil) {
-        this.telefonoMovil = telefonoMovil;
-    }
-
     public Vacuna getVacuna() {
         return vacuna;
     }
@@ -162,14 +143,16 @@ public class Usuario {
         this.vacuna = vacuna;
     }
 
-    public boolean isVacunado() {
-        return vacunado;
+
+    public DatosPersonales getDatosPersonales() {
+        return datosPersonales;
     }
 
-    public void setVacunado(boolean estaVacunado) {
-        this.vacunado = estaVacunado;
-    }
 
+    public void setDatosPersonales(DatosPersonales datosPersonales) {
+        this.datosPersonales = datosPersonales;
+    }
+    
     // endregion
 
 }

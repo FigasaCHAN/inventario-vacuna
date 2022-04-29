@@ -22,7 +22,9 @@ public class UsuarioService {
         return usuarioRepository.findAll();
     }
     public List<Usuario> getVacunados(boolean vacunado){
-        return vacunado? usuarioRepository.findByVacunadoTrue() : usuarioRepository.findByVacunadoFalse();
+        //TODO Corregir
+        return null;
+        //return vacunado? usuarioRepository.findByVacunadoTrue() : usuarioRepository.findByVacunadoFalse();
     }
     public List<Usuario> getVacunados(String vacuna){
         //TODO Corregir
