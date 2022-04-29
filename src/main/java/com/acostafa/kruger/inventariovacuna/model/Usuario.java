@@ -2,9 +2,12 @@ package com.acostafa.kruger.inventariovacuna.model;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -49,7 +52,10 @@ public class Usuario {
     private String domicilio;
     private String telefonoMovil;
     private boolean vacunado;
-    private String vacuna; // TODO relacionar con una tabla de Vacunacion
+
+    @JoinColumn(name = "id_vacuna", unique=true)
+    @OneToOne(cascade = CascadeType.ALL)
+    private Vacuna vacuna; // TODO relacionar con una tabla de Vacunacion
     // endregion
     // endregion
     // region Constructores
@@ -148,11 +154,11 @@ public class Usuario {
         this.telefonoMovil = telefonoMovil;
     }
 
-    public String getVacuna() {
+    public Vacuna getVacuna() {
         return vacuna;
     }
 
-    public void setVacuna(String vacuna) {
+    public void setVacuna(Vacuna vacuna) {
         this.vacuna = vacuna;
     }
 

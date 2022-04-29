@@ -25,7 +25,9 @@ public class UsuarioService {
         return vacunado? usuarioRepository.findByVacunadoTrue() : usuarioRepository.findByVacunadoFalse();
     }
     public List<Usuario> getVacunados(String vacuna){
-        return usuarioRepository.findByVacuna(vacuna);
+        //TODO Corregir
+        //return usuarioRepository.findByVacuna(vacuna);
+        return null;
     }
     public void delete(Usuario usuario){
         usuarioRepository.delete(usuario);

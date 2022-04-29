@@ -57,7 +57,9 @@ public class UsuarioREST {
     @GetMapping(value = "/listar/vacunados-con/{vacuna}")
     @Procedure(value = MediaType.APPLICATION_JSON_VALUE)
     private ResponseEntity<List<Usuario>> listarVacunados(@PathVariable String vacuna) {
-        return ResponseEntity.ok(usuarioService.getVacunados(vacuna));
+        //TODO corregir
+        //return ResponseEntity.ok(usuarioService.getVacunados(vacuna));
+        return null;
     }
     // endregion
     //region Eliminar
