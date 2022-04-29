@@ -1,9 +1,11 @@
 package com.acostafa.kruger.inventariovacuna.service.implementaciones;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import com.acostafa.kruger.inventariovacuna.model.Usuario;
+import com.acostafa.kruger.inventariovacuna.model.Vacuna;
 import com.acostafa.kruger.inventariovacuna.repository.DatosPersonalesRepository;
 import com.acostafa.kruger.inventariovacuna.repository.UsuarioRepository;
 import com.acostafa.kruger.inventariovacuna.repository.VacunaRepository;
@@ -39,8 +41,16 @@ public class UsuarioServiceImp implements IUsuarioService{
 
     @Override
     public List<Usuario> getVacunados(String vacuna) {
-        //TODO implementar Filtro por Tipo De Vacuna
-        return null;
+        List<Usuario> listaDeUsuarios = new ArrayList<Usuario>();
+        List<Vacuna> listaDeVacunas = vacunasRepository.findByTipo(vacuna);
+
+        for(Vacuna elem : listaDeVacunas){
+            String idABuscar= elem.getId();
+            Usuario usuarioEncontrado = this.findById(idABuscar);
+            listaDeUsuarios.add(usuarioEncontrado);
+        }
+
+        return listaDeUsuarios;
     }
 
     @Override
