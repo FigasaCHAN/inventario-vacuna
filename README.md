@@ -18,7 +18,6 @@ public class Usuario {
    private String usuario; //no puede estar vacio & distinto de null 
    private String contraseña; //no puede estar vacio & distinto de null & 
    private DatosPersonales; 
-   Vacuna vacuna; //si es distinto de null, entonces DatosPersonales.estaVacunado debe ser true
    Rol rolDelUsuario;
 
   public Usuario(String cedula, String nombre, String apellido, String email); //Constructor que representa correctamente a un usuario. Para cumplir el IREP aqui es donde asigno un usuario y una contraseña. 
@@ -46,6 +45,21 @@ public class Usuario {
 ```java
 public class RolEmpleado extends Rol{
    private DatosPersonales datosPersonales;
+
+   //Los metodos interactúan sobre la variable datos personales
+   public void modificarFechaDeNacimiento(Fecha fechaDeNacimiento);
+   public void modificarDomicilio(String nuevoDomicilio);
+   public void modificarTelefonoMovil(String nuevoTelefonoMovil);
+   public void modificarEstadoDeVacunacion(boolean nuevoEstado);
+} 
+```  
+```java
+public class DatosPersonales {
+     String fechaDeNacimiento;
+     String domicilio;
+     String telefonoMovil;
+     String estadoDeVacunacion;
+     Vacuna vacuna; //si es distinto de null, entonces estaDoDeVacunacion debe ser true
 
    //Los metodos interactúan sobre la variable datos personales
    public void modificarFechaDeNacimiento(Fecha fechaDeNacimiento);
