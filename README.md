@@ -81,10 +81,9 @@ En un proyecto podemos tener varias implementaciones de un mismo servicio, podr�
 
 Un punto que me hubiese gustado agregar, y es donde falla mi actual diseño, es utilizar un objeto DAO para proteger ciertos datos como la contraseña del usuario, por ejemplo. Con esto, los Rest solo expondrán los datos que YO quiera. Actualmente la contraseña del usuario está expuesta.
 
-Un problema que tuve fue relacionar un objeto con otro, por ejemplo el objeto DatosPersonales según nuestro modelo contiene una Vacuna. Para solucionar esto, se utiliza una base de datos relacional, con esto presente... 
+Un problema que tuve fue relacionar un objeto con otro, por ejemplo el objeto DatosPersonales según nuestro modelo contiene una Vacuna. Para solucionar esto, se utiliza una base de datos relacional, con esto presente para implementar los filtros he utilizado las query por propiedad que me brinda JPA en el repositorio.
+Como regla, los ID de los objetos DatosPersonales y Vacuna tienen que ser iguales a los del objeto Usuario. (Actualmente se debe escribir manualmente el id, no pude solucionar eso)
 
-
-Para implementar los filtros he utilizado las query por propiedad que me brinda JPA en el repositorio.
 ### Filtro segun el estado de vacunacion
 Para el filtro de Estado de Vacunacion, accedo al repositorio de DatosPersonales, obtengo todos los ID y luego retorno una lista de usuarios.
 ```java
@@ -121,3 +120,6 @@ Para este filtro se utiliza la misma estrategia, obtengo la lista de vacunas seg
 ### Filtro entre rango de Fecha
 Por cuestión de tiempo, no he implementado esta funcionalidad. Pero se me ocurre una manera, primero debería cambiar el tipo de dato utilizado para la Fecha y luego crear una query para saber el rango.
 
+#
+### Respetar IREP del modelo
+Para esto he utilizado las etiquetas Validation, las cuales permitió poner limites con expresiones regulares utilizado, por ejemplo, en el campo fecha guardado como string.  
