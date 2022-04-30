@@ -51,9 +51,6 @@ public class Usuario {
     @OneToOne(cascade = CascadeType.ALL)
     private DatosPersonales datosPersonales;
 
-    @JoinColumn(name = "id_vacuna", unique=true)
-    @OneToOne(cascade = CascadeType.ALL)
-    private Vacuna vacuna;
     // endregion
     // endregion
     // region Constructores
@@ -67,7 +64,7 @@ public class Usuario {
             @NotBlank @Length(min = 3, max = 15) @Pattern(regexp = "[A-Z]{1}[a-z]{2,15}", message = "Nombre no valido") String nombre,
             @NotBlank @Length(min = 3, max = 15) @Pattern(regexp = "[A-Z]{1}[a-z]{2,15}", message = "Apellido no valido") String apellido,
             @NotBlank @Email(message = "No es un email valido") String email, @NotBlank String usuario,
-            @NotBlank String contraseña, boolean administrador, DatosPersonales datosPersonales, Vacuna vacuna) {
+            @NotBlank String contraseña, boolean administrador, DatosPersonales datosPersonales) {
         this.cedula = cedula;
         this.nombre = nombre;
         this.apellido = apellido;
@@ -76,7 +73,6 @@ public class Usuario {
         this.contraseña = contraseña;
         this.administrador = administrador;
         this.datosPersonales = datosPersonales;
-        this.vacuna = vacuna;
     }
     // endregion
     //region Getters y Setters
@@ -132,15 +128,6 @@ public class Usuario {
         this.administrador = administrador;
     }
 
-    public Vacuna getVacuna() {
-        return vacuna;
-    }
-
-    public void setVacuna(Vacuna vacuna) {
-        this.vacuna = vacuna;
-    }
-
-
     public DatosPersonales getDatosPersonales() {
         return datosPersonales;
     }
@@ -148,15 +135,6 @@ public class Usuario {
 
     public void setDatosPersonales(DatosPersonales datosPersonales) {
         this.datosPersonales = datosPersonales;
-    }
-
-    // endregion
-
-    @Override
-    public String toString() {
-        return "Usuario [administrador=" + administrador + ", apellido=" + apellido + ", cedula=" + cedula
-                + ", contraseña=" + contraseña + ", datosPersonales=" + datosPersonales + ", email=" + email
-                + ", nombre=" + nombre + ", usuario=" + usuario + ", vacuna=" + vacuna + "]";
     }
 
 
@@ -172,7 +150,6 @@ public class Usuario {
         result = prime * result + ((email == null) ? 0 : email.hashCode());
         result = prime * result + ((nombre == null) ? 0 : nombre.hashCode());
         result = prime * result + ((usuario == null) ? 0 : usuario.hashCode());
-        result = prime * result + ((vacuna == null) ? 0 : vacuna.hashCode());
         return result;
     }
 
@@ -223,13 +200,18 @@ public class Usuario {
                 return false;
         } else if (!usuario.equals(other.usuario))
             return false;
-        if (vacuna == null) {
-            if (other.vacuna != null)
-                return false;
-        } else if (!vacuna.equals(other.vacuna))
-            return false;
         return true;
     }
+
+
+    @Override
+    public String toString() {
+        return "Usuario [administrador=" + administrador + ", apellido=" + apellido + ", cedula=" + cedula
+                + ", contraseña=" + contraseña + ", datosPersonales=" + datosPersonales + ", email=" + email
+                + ", nombre=" + nombre + ", usuario=" + usuario + "]";
+    }
+    
+    // endregion
 
     
 }

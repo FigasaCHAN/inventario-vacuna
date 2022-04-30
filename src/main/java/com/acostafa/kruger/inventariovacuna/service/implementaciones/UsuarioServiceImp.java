@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import com.acostafa.kruger.inventariovacuna.model.DatosPersonales;
 import com.acostafa.kruger.inventariovacuna.model.Usuario;
 import com.acostafa.kruger.inventariovacuna.model.Vacuna;
 import com.acostafa.kruger.inventariovacuna.repository.DatosPersonalesRepository;
@@ -36,7 +37,15 @@ public class UsuarioServiceImp implements IUsuarioService{
 
     @Override
     public List<Usuario> getVacunados(boolean vacunado) {
-        return vacunado?usuarioRepository.findByVacunaIsNotNull():usuarioRepository.findByVacunaIsNull();
+        List<Usuario> listaDeUsuarios = new ArrayList<Usuario>();
+        List<DatosPersonales> listaDeVacunas = vacunado? datosPersonalesRepository.findByVacunaIsNotNull() :datosPersonalesRepository.findByVacunaIsNull() ;
+
+        for(DatosPersonales elem : listaDeVacunas){
+            String idABuscar= elem.getId();
+            Usuario usuarioEncontrado = this.findById(idABuscar);
+            listaDeUsuarios.add(usuarioEncontrado);
+        }
+        return listaDeUsuarios;
     }
 
     @Override

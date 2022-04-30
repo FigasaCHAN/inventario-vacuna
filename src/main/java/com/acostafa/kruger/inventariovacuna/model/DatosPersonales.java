@@ -1,8 +1,11 @@
 package com.acostafa.kruger.inventariovacuna.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 
@@ -16,7 +19,7 @@ public class DatosPersonales {
     @Column(name = "id_datosPersonales")
     @NotBlank
     @Length(min = 10, max = 10)
-    private String id; //este id estara relacionado al id del usuario
+    private String id; // este id estara relacionado al id del usuario
 
     private String fechaDeNacimiento;
 
@@ -26,21 +29,25 @@ public class DatosPersonales {
 
     private boolean vacunado;
 
+    @JoinColumn(name = "id_vacuna", unique = true)
+    @OneToOne(cascade = CascadeType.ALL)
+    private Vacuna vacuna;
+
     // region Constructores
-    public DatosPersonales(){
+    public DatosPersonales() {
 
     }
 
-   
-
     public DatosPersonales(@NotBlank @Length(min = 10, max = 10) String id, String fechaDeNacimiento, String domicilio,
-            String telefonoMovil, boolean vacunado) {
+            String telefonoMovil, boolean vacunado, Vacuna vacuna) {
         this.id = id;
         this.fechaDeNacimiento = fechaDeNacimiento;
         this.domicilio = domicilio;
         this.telefonoMovil = telefonoMovil;
         this.vacunado = vacunado;
+        this.vacuna = vacuna;
     }
+
     // endregion
 
     // region Getters y Setters
@@ -83,14 +90,14 @@ public class DatosPersonales {
     public void setVacunado(boolean vacunado) {
         this.vacunado = vacunado;
     }
-    //endregion
+    // endregion
 
+    public Vacuna getVacuna() {
+        return vacuna;
+    }
 
-
-    @Override
-    public String toString() {
-        return "DatosPersonales [domicilio=" + domicilio + ", fechaDeNacimiento=" + fechaDeNacimiento + ", id=" + id
-                + ", telefonoMovil=" + telefonoMovil + ", vacunado=" + vacunado + "]";
+    public void setVacuna(Vacuna vacuna) {
+        this.vacuna = vacuna;
     }
 
     @Override
@@ -101,6 +108,7 @@ public class DatosPersonales {
         result = prime * result + ((fechaDeNacimiento == null) ? 0 : fechaDeNacimiento.hashCode());
         result = prime * result + ((id == null) ? 0 : id.hashCode());
         result = prime * result + ((telefonoMovil == null) ? 0 : telefonoMovil.hashCode());
+        result = prime * result + ((vacuna == null) ? 0 : vacuna.hashCode());
         result = prime * result + (vacunado ? 1231 : 1237);
         return result;
     }
@@ -134,9 +142,14 @@ public class DatosPersonales {
                 return false;
         } else if (!telefonoMovil.equals(other.telefonoMovil))
             return false;
+        if (vacuna == null) {
+            if (other.vacuna != null)
+                return false;
+        } else if (!vacuna.equals(other.vacuna))
+            return false;
         if (vacunado != other.vacunado)
             return false;
         return true;
     }
-    
+
 }
