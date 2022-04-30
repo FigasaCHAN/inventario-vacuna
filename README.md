@@ -123,3 +123,4 @@ Por cuestión de tiempo, no he implementado esta funcionalidad. Pero se me ocurr
 #
 ### Respetar IREP del modelo
 Para esto he utilizado las etiquetas Validation, las cuales permitió poner limites con expresiones regulares utilizado, por ejemplo, en el campo fecha guardado como string.  
+Comentario: Si bien los datos se pueden validar en el FrontEnd, lo ideal es que el backend tambien tenga ese escudo porque sino podríamos tener datos incorrectos en la base de datos.
