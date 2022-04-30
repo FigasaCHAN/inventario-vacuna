@@ -68,7 +68,7 @@ public class DatosPersonales {
    public void modificarEstadoDeVacunacion(boolean nuevoEstado);
 } 
 ```  
-### Implementacion:
+## Implementacion:
 Durante el proceso de implementación tuve distintas estrategia, y admito que todavía le queda pulir al proyecto, sobre todo la SEGURIDAD. 
 En un principio creé el proyecto con solo tres capas (paquetes), las cuales son:
 * Model: La cual se encarga de contener el modelo
@@ -80,3 +80,44 @@ Por otro lado, después de leer varios post y ver distintos videos con respeto a
 En un proyecto podemos tener varias implementaciones de un mismo servicio, podríamos realizar varias implementaciones con distintos repositorios. 
 
 Un punto que me hubiese gustado agregar, y es donde falla mi actual diseño, es utilizar un objeto DAO para proteger ciertos datos como la contraseña del usuario, por ejemplo. Con esto, los Rest solo expondrán los datos que YO quiera. Actualmente la contraseña del usuario está expuesta.
+
+Un problema que tuve fue relacionar un objeto con otro, por ejemplo el objeto DatosPersonales según nuestro modelo contiene una Vacuna. Para solucionar esto, se utiliza una base de datos relacional, con esto presente... 
+
+
+Para implementar los filtros he utilizado las query por propiedad que me brinda JPA en el repositorio.
+### Filtro segun el estado de vacunacion
+Para el filtro de Estado de Vacunacion, accedo al repositorio de DatosPersonales, obtengo todos los ID y luego retorno una lista de usuarios.
+```java
+    @Override
+    public List<Usuario> getVacunados(boolean vacunado) {
+        List<Usuario> listaDeUsuarios = new ArrayList<Usuario>();
+        List<DatosPersonales> listaDeVacunas = vacunado? datosPersonalesRepository.findByVacunaIsNotNull() :datosPersonalesRepository.findByVacunaIsNull() ;
+
+        for(DatosPersonales elem : listaDeVacunas){
+            String idABuscar= elem.getId();
+            Usuario usuarioEncontrado = this.findById(idABuscar);
+            listaDeUsuarios.add(usuarioEncontrado);
+        }
+        return listaDeUsuarios;
+    }
+```  
+### Filtro según el tipo de vacuna
+Para este filtro se utiliza la misma estrategia, obtengo la lista de vacunas segun el tipo, recojo su id y luego creo una lista con los usuarios.
+```java
+    @Override
+    public List<Usuario> getVacunados(String vacuna) {
+        List<Usuario> listaDeUsuarios = new ArrayList<Usuario>();
+        List<Vacuna> listaDeVacunas = vacunasRepository.findByTipo(vacuna);
+
+        for(Vacuna elem : listaDeVacunas){
+            String idABuscar= elem.getId();
+            Usuario usuarioEncontrado = this.findById(idABuscar);
+            listaDeUsuarios.add(usuarioEncontrado);
+        }
+
+        return listaDeUsuarios;
+    }
+```  
+### Filtro entre rango de Fecha
+Por cuestión de tiempo, no he implementado esta funcionalidad. Pero se me ocurre una manera, primero debería cambiar el tipo de dato utilizado para la Fecha y luego crear una query para saber el rango.
+
